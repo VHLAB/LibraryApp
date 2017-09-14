@@ -1,0 +1,48 @@
+//use grid MVC to make table more readable-- BOOTSTRAP REQUIRED
+//bottom up build, re-examine leaves
+
+import React, {Component}from 'react';
+
+class HeadersRow extends React.Component { //consider how to make more generic, obtain attributes from metadata
+	render(){
+		return(<tr><th>Heart #</th><th>Age</th><th>Status</th><tr/>);
+	}
+}
+
+class HeartRow extends React.Component {
+	render(){
+		return(<tr><td>{this.props.heartObj.HeartNumber}</td><td>{this.props.heartObj.Age}</td><td>{this.props.heartObj.Status}</td></tr>); //customize data here
+	}
+}
+
+function listify(props){
+	return(<div>
+		props.hearts.map((heart) => {
+			return (<HeartRow heartObj=heart/>);
+		});
+	</div>);
+}
+
+class HeartsTable extends React.Component{
+	render(){
+		return(<table><HeadersRow /><listify hearts=this.props.heartArray/></table>);
+	}
+}
+
+class App extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			heartArray = [
+			{HeartNumber: 1, Age: 1, Status:1},
+			{HeartNumber: 2, Age: 2, Status:2},
+			{HeartNumber: 3, Age: 3, Status:3}];
+		};
+	}
+
+	render(){
+		return <HeartsTable heartArray = this.state.heartArray/>;
+	}
+}
+
+export default App2;
