@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 import firebaseui from 'firebaseui';
 
+var config = require("./config.json");
+console.log(config);
 
 firebase.initializeApp(config);
 
@@ -40,11 +42,12 @@ class App extends React.Component {
        //**FEATURES TO ADD FIREBASE**
   //***************************************************************
   componentWillMount() { //without ReactFire
+    var heartHolder = [];
     this.firebaseRef = firebase.database().ref("hearts"); //firebaseRef becomes nodes of hearts
     this.firebaseRef.on("child_added", (heartNode) => { //called at each child_added alert
-      this.state.hearts.push(heartNode.val());
+      heartHolder.push(heartNode.val());
       this.setState({
-       hearts: this.state.hearts //update this.state.hearts to include the heart node just added
+       hearts: heartHolder //update this.state.hearts to include the heart node just added
      });
     }).bind(this);
   }
